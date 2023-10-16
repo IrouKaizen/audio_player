@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecteur audio</title>
+</head>
+<body>
+    <div class="container">
+        <audio id="myAudio">
+            <source src="yamete.wav" type="audio/mpeg">
+        </audio>
+        <button id="playBtn">Play </button>
+        <button id="pauseBtn">Pause</button>
+        <input id="volumeSlider" type="range" min="0" max="1" step="0.01">
+    </div>
+
+    <script>
+        const audio = document.getElementById("myAudio");
+        const playBtn = document.getElementById("playBtn");
+        const pauseBtn = document.getElementById("pauseBtn");
+        const volumeSlider = document.getElementById("volumeSQlider");
+        const currentTime = document.getElementById("currentTime");
+        const duration = document.getElementById("duration");
+
+        playBtn.addEventListener("click", () =>{
+            audio.play();
+        });
+        pauseBtn.addEventListener("click", () =>{
+            audio.pause();
+        });
+        volumeSlider.addEventListener("input", () =>{
+            audio.volume = volumeSlider.value;
+        });
+
+        audio.addEventListener("timeupdate", () => {
+            const minutes = Math.floor(audio.currentTime / 60);
+            const seconds = Math.floor(audio.currentTime % 60);
+            currentTime.textContent = `${minutes} : ${seconds < 10 ? "0" : ""}${seconds}`
+        })
+        audio.addEventListener("loadedmetadata", () => {
+            const minutes = Math.floor(audio.duration / 60);
+            const seconds = Math.floor(audio.duration % 60);
+            duration.textContent = `${minutes} : ${seconds < 10 ? "0" : ""}${seconds}`
+        })
+    </script>
+
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgb(168, 168, 168);
+        }
+        button{
+            margin: 30px;
+            padding: 30px 30px;
+            background-color: rgb(143, 123, 10);
+            color: rgb(247, 247, 246);
+            border: none;
+            border-radius: 20%;
+            cursor: pointer;
+        }
+        input[type ="range"]{
+            width: 200px;
+            margin: 0 10px;
+        }
+    </style>
+</body>
+</html>
